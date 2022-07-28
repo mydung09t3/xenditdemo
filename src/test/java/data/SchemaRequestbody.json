@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "Description": {
+      "type": "string"
+    },
+    "callBack_URL": {
+      "type": "string"
+    },
+    "mount": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "Description",
+    "callBack_URL",
+    "mount"
+  ]
+}

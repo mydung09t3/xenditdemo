@@ -1,0 +1,5 @@
+{
+  "description": "Automation test",
+  "callback_url": "https://www.youtube.com/",
+  "amount" : 1000
+}
