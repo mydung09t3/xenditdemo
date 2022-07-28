@@ -5,9 +5,9 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class ResponsePathRequest {
+public class ResponsePatchRequest {
 
-    public HttpResponse<JsonNode> getPathRequestResponse(String url, String body, String auth) {
+    public HttpResponse<JsonNode> getPatchRequestResponse(String url, String body, String auth) {
         HttpResponse<JsonNode> response = null;
         try {
             response = Unirest.patch(url)

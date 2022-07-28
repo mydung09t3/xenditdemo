@@ -12,17 +12,17 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import APICore.LoadJsonFile;
-import APICore.ResponsePathRequest;
+import APICore.ResponsePatchRequest;
 
 
-public class TestPathQRCode {
+public class TestPatchQRCode {
     public static String PROPERTIES = "config.properties";
     public String url = PropertiesHelper.getConfigValue(PROPERTIES, "URL");
     public String auth = PropertiesHelper.getConfigValue(PROPERTIES, "AUTHENTICATION");
     JSONParser parser = new JSONParser();
     LoadJsonFile loadFile = new LoadJsonFile();
-    ResponsePathRequest pathRes = new ResponsePathRequest();
-    String jsonFile = "PathQRCodeBody.Json";
+    ResponsePatchRequest patchResponse = new ResponsePatchRequest();
+    String jsonFile = "PatchQRCodeBody.Json";
 
 
     @DataProvider(name = "data-provider")
@@ -36,10 +36,10 @@ public class TestPathQRCode {
     }
 
     @Test
-    public void verifyPathSuccessWithAllField() {
+    public void verifyPatchSuccessWithAllField() {
         String body = null;
         int amount = 0;
-        String description = null, callBack_url = null;
+        String description = null, callBack_Url = null;
         try {
             String file = loadFile.loadFileJson(jsonFile);
             JSONObject data = (JSONObject) parser.parse(file);
@@ -48,23 +48,23 @@ public class TestPathQRCode {
             data.put("callBack_url", "test url");
             amount = (int) data.get("amount");
             description = data.get("Description").toString();
-            callBack_url = data.get("callBack_url").toString();
+            callBack_Url = data.get("callBack_url").toString();
             body = new Gson().toJson(data);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         HttpResponse<JsonNode> response = null;
-        response = pathRes.getPathRequestResponse(url + "/qr_codes/:qr_code_id", body, auth);
+        response = patchResponse.getPatchRequestResponse(url + "/qr_codes/:qr_code_id", body, auth);
 
         Assert.assertEquals(response.getStatus(), 200);
         Assert.assertEquals(response.getBody().getObject().getString("amount"), amount);
         Assert.assertEquals(response.getBody().getObject().getString("Description"), description);
-        Assert.assertEquals(response.getBody().getObject().getString("callBack_url"), callBack_url);
+        Assert.assertEquals(response.getBody().getObject().getString("callBack_url"), callBack_Url);
     }
 
 
     @Test
-    public void verifyPathSuccessWithAmount() {
+    public void verifyPatchSuccessWithAmount() {
         String body = null;
         int amount = 0;
         try {
@@ -77,7 +77,7 @@ public class TestPathQRCode {
             e.printStackTrace();
         }
         HttpResponse<JsonNode> response = null;
-        response = pathRes.getPathRequestResponse(url + "/qr_codes/:qr_code_id", body, auth);
+        response = patchResponse.getPatchRequestResponse(url + "/qr_codes/:qr_code_id", body, auth);
         Assert.assertEquals(response.getStatus(), 200);
         Assert.assertEquals(response.getBody().getObject().getString("amount"), amount);
     }
@@ -93,7 +93,7 @@ public class TestPathQRCode {
             e.printStackTrace();
         }
         HttpResponse<JsonNode> response = null;
-        response = pathRes.getPathRequestResponse(url + "/qr_codes/:qr_code_id", body, auth);
+        response = patchResponse.getPatchRequestResponse(url + "/qr_codes/:qr_code_id", body, auth);
         Assert.assertEquals(response.getStatus(), 401);
     }
 
@@ -111,7 +111,7 @@ public class TestPathQRCode {
             e.printStackTrace();
         }
         HttpResponse<JsonNode> response = null;
-        response = pathRes.getPathRequestResponse(url + "/qr_codes/:qr_code_id", body, auth);
+        response = patchResponse.getPatchRequestResponse(url + "/qr_codes/:qr_code_id", body, auth);
 
         Assert.assertEquals(response.getStatus(), "API_VALIDATION_ERROR");
         Assert.assertEquals(response.getBody().getObject().getString("key"), message);
@@ -138,7 +138,7 @@ public class TestPathQRCode {
             e.printStackTrace();
         }
         HttpResponse<JsonNode> response = null;
-        response = pathRes.getPathRequestResponse(url + "/qr_codes/" + qrCode, body, auth);
+        response = patchResponse.getPatchRequestResponse(url + "/qr_codes/" + qrCode, body, auth);
         Assert.assertEquals(response.getStatus(), statusCode);
         Assert.assertEquals(response.getBody().getObject().getString("message"), message);
     }

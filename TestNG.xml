@@ -4,7 +4,7 @@
 <suite name="Xendit demo" >
     <test name="xendit demo">
         <classes>
-            <class name="suites.TestPathQRCode"/>
+            <class name="suites.TestPatchQRCode"/>
         </classes>
     </test>
 </suite>
